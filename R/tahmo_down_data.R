@@ -8,7 +8,11 @@ get.tahmo.api <- function(aws_dir, adt_dir){
     if(!dir.exists(dirOUT))
         dir.create(dirOUT, showWarnings = FALSE, recursive = TRUE)
     dirLOG <- file.path(aws_dir, "AWS_DATA", "LOG", "TAHMO")
+    if(!dir.exists(dirLOG))
+        dir.create(dirLOG, showWarnings = FALSE, recursive = TRUE)
     dirLOG1 <- file.path(adt_dir, "AWS_DATA", "LOG", "TAHMO")
+    if(!dir.exists(dirLOG1))
+        dir.create(dirLOG1, showWarnings = FALSE, recursive = TRUE)
 
     mon <- format(Sys.time(), '%Y%m')
     logDOWN <- file.path(dirLOG, paste0("download_tahmo_", mon, ".txt"))
