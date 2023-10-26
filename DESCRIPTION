@@ -1,0 +1,16 @@
+Package: rawsParserADTDCCMS
+Version: 2.5
+Title: Department of Climate Change and Meteorological Services (DCCMS) Automatic Weather Station (AWS) Data Parsing
+Description: Process data from DCCMS's AWS Networks. It fetches the data from the networks database. The data are converted to a standard format used by DCCMS's AWS Data Tools (ADT).
+Author: Rija Faniriantsoa <rijaf@iri.columbia.edu>
+Maintainer: Rija Faniriantsoa <rijaf@iri.columbia.com>
+License: GPL-3
+Encoding: UTF-8
+NeedsCompilation: no
+Date: 2023-10-26
+Imports: 
+    ssh,
+    httr,
+    DBI,
+    RMySQL,
+RoxygenNote: 7.2.3
