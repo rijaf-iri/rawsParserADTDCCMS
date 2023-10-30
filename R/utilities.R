@@ -15,6 +15,22 @@ connect.DBI <- function(con_args, drv, dirAWS){
     return(con)
 }
 
+connect.RODBC <- function(con_args, dirAWS){
+    args <- paste0(names(con_args), '=', unlist(con_args))
+    args <- paste(args, collapse = ";")
+    args <- list(connection = args, readOnlyOptimize = TRUE)
+    con <- try(do.call(RODBC::odbcDriverConnect, args), silent = TRUE)
+    if(inherits(con, "try-error")){
+        conLogFile <- file.path(dirAWS, "AWS_DATA", "LOG", "log_error_connection.txt")
+        err <- gsub('[\r\n]', '', con)
+        msg <- paste("Unable to connect to the database\n", err)
+        format.out.msg(msg, conLogFile)
+        return(NULL)
+    }
+
+    return(con)
+}
+
 connect.adt_db <- function(dirAWS){
     ff <- file.path(dirAWS, "AWS_DATA", "AUTH", "adt.con")
     adt <- readRDS(ff)
@@ -25,6 +41,19 @@ connect.adt_db <- function(dirAWS){
         if(is.null(conn)) return(NULL)
     }
     DBI::dbExecute(conn, "SET GLOBAL local_infile=1")
+
+    return(conn)
+}
+
+connect.campbell <- function(dirAWS){
+    ff <- file.path(dirAWS, "AWS_DATA", "AUTH", "campbell.con")
+    campbell <- readRDS(ff)
+    conn <- connect.RODBC(campbell$connection, dirAWS)
+    if(is.null(conn)){
+        Sys.sleep(3)
+        conn <- connect.RODBC(campbell$connection, dirAWS)
+        if(is.null(conn)) return(NULL)
+    }
 
     return(conn)
 }
