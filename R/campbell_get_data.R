@@ -77,13 +77,14 @@ get.campbell.data <- function(aws_dir, adt_dir){
         lastCBS <- format(last, "%Y-%m-%d %H:%M:%S.0000000")
         last <- as.numeric(last)
 
-        # query <- paste0("SELECT * FROM [dbo].[", awsCrd$dbTable_name[j], "] WHERE TmStamp > '", lastCBS, "'")
-        # qres <- try(RODBC::sqlQuery(conn, query), silent = TRUE)
-
-        #### remove
-        query <- paste0("SELECT * FROM [dbo].[", awsCrd$dbTable_name[j], "]")
+        #### comment 1st run
+        query <- paste0("SELECT * FROM [dbo].[", awsCrd$dbTable_name[j], "] WHERE TmStamp > '", lastCBS, "'")
         qres <- try(RODBC::sqlQuery(conn, query), silent = TRUE)
-        ###
+
+        # #### uncomment 1st run
+        # query <- paste0("SELECT * FROM [dbo].[", awsCrd$dbTable_name[j], "]")
+        # qres <- try(RODBC::sqlQuery(conn, query), silent = TRUE)
+        # ###
 
         if(inherits(qres, "try-error")){
             msg <- paste("Unable to get data, aws_id:", awsID)
@@ -103,10 +104,10 @@ get.campbell.data <- function(aws_dir, adt_dir){
 
         if(is.null(out)) next
 
-        ########### uncomment
-        # it <- out$obs_time > last
-        # out <- out[it, , drop = FALSE]
-        # if(nrow(out) == 0) next
+        ########### comment 1st run
+        it <- out$obs_time > last
+        out <- out[it, , drop = FALSE]
+        if(nrow(out) == 0) next
 
         ###########
 
