@@ -36,8 +36,8 @@ get.campbell.data <- function(aws_dir, adt_dir){
         format.out.msg(msg, logPROC)
         upload <- FALSE
     }else{
-        dirUPData <- file.path(adt_dir, "AWS_DATA", "DATA", "minutes", "CAMPBEL")
-        dirUPLog <- file.path(adt_dir, "AWS_DATA", "LOG", "CAMPBEL")
+        dirUPData <- file.path(adt_dir, "AWS_DATA", "DATA", "minutes", "CAMPBELL")
+        dirUPLog <- file.path(adt_dir, "AWS_DATA", "LOG", "CAMPBELL")
         ssh::ssh_exec_wait(session, command = c(
             paste0('if [ ! -d ', dirUPData, ' ] ; then mkdir -p ', dirUPData, ' ; fi'),
             paste0('if [ ! -d ', dirUPLog, ' ] ; then mkdir -p ', dirUPLog, ' ; fi')
